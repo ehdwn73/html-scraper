@@ -7,7 +7,7 @@ CORS(app)
 
 @app.route('/')
 def intro():
-    return '/scrape?url=target url'
+    return 'https://github.com/Gtwo2/html-scraper/blob/main/README.md'
 
 @app.route('/scrape')
 def scrape():
