@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def intro():
-    return '/scrape?url=target_url'
+    return '/scrape?url=target url'
 
 @app.route('/scrape')
 def scrape():
