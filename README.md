@@ -1,3 +1,3 @@
 ```js
-https://html-scraper.vercel.app/scrape?url=target url
+await fetch(`https://html-scraper.vercel.app/scrape?url=${target_url}`);
 ```
