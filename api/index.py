@@ -2,6 +2,7 @@ from flask import Flask, request
 import requests
 from bs4 import BeautifulSoup
 from flask_cors import CORS
+import jsbeautifier
 
 app = Flask(__name__)
 CORS(app)
@@ -21,8 +22,14 @@ def scrape():
         response.raise_for_status()
         html = response.text
 
-        # HTML을 표준에 맞게 수정
         soup = BeautifulSoup(html, 'html5lib')
+
+        scripts = soup.find_all('script')
+        for script in scripts:
+            if script.string:
+                beautified_js = jsbeautifier.beautify(script.string)
+                script.string.replace_with(beautified_js)
+
         standardized_html = soup.prettify()
 
         return standardized_html
