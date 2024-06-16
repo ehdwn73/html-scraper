@@ -2,7 +2,7 @@
 simple html scraper (+code cleaning)
 
 # Excute
-https://runner-sigma-lake.vercel.app/
+https://api-executor.vercel.app/
 
 # Usage
 ```js
