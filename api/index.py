@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from flask_cors import CORS
 import jsbeautifier
 
-app = Flask(name)
+app = Flask(__name__)
 CORS(app)
 
 @app.route('/')
@@ -35,5 +35,5 @@ def scrape():
         return standardized_html
     except requests.exceptions.RequestException as e:
         return f"ERROR : {str(e)}", 500
-if name == 'main':
+if __name__ == 'main':
     app.run()
