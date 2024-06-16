@@ -6,5 +6,14 @@ https://api-executor.vercel.app/
 
 # Usage
 ```js
-await fetch(`https://html-scraper.vercel.app/scrape?url=${TARGET_URL}`);
+async function fetchHTML() {
+    try {
+        const response = await fetch(`https://html-scraper.vercel.app/scrape?url=${target_url}`);
+        const html = await response.text();
+        console.log(html)
+    } catch (error) {
+        console.log(`Error: ${error.message}`);
+    }
+}
+fetchHTML();
 ```
