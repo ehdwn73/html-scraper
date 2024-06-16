@@ -19,7 +19,6 @@ def scrape():
         response.raise_for_status()
         html = response.text
 
-        # HTML을 표준에 맞게 수정
         soup = BeautifulSoup(html, 'html5lib')
 
         scripts = soup.find_all('script')
