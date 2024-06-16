@@ -1,5 +1,11 @@
 from flask import Flask, request
-import requests
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 from flask_cors import CORS
 import jsbeautifier
@@ -18,11 +24,25 @@ def scrape():
         return "ERROR : URL not specified", 400
 
     try:
-        response = requests.get(target_url)
-        response.raise_for_status()
-        html = response.text
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
 
-        soup = BeautifulSoup(html, 'html5lib')
+        service = ChromeService(executable_path=ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=service, options=chrome_options)
+
+        driver.get(target_url)
+        
+        WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.TAG_NAME, "body"))
+        )
+
+        html = driver.page_source
+
+        driver.quit()
+
+        soup = BeautifulSoup(html, 'html.parser')
 
         scripts = soup.find_all('script')
         for script in scripts:
@@ -33,7 +53,7 @@ def scrape():
         standardized_html = soup.prettify()
 
         return standardized_html
-    except requests.exceptions.RequestException as e:
+    except Exception as e:
         return f"ERROR : {str(e)}", 500
 
 if __name__ == '__main__':
