@@ -3,14 +3,14 @@ simple html scraper (+code cleaning)
 
 # Usage
 ```js
-async function fetchHTML() {
+async function fetchHTML(target_url) {
     try {
         const response = await fetch(`https://html-scraper.vercel.app/scrape?url=${target_url}`);
         const html = await response.text();
-        console.log(html)
+        return html
     } catch (error) {
-        console.log(`Error: ${error.message}`);
+        return `Error: ${error.message}`;
     }
 }
-fetchHTML();
+let result = fetchHTML(target_url);
 ```
