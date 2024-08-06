@@ -12,5 +12,6 @@ async function fetchHTML(target_url) {
         return `Error: ${error.message}`;
     }
 }
-let result = fetchHTML(target_url);
+let result = await fetchHTML('https://naver.me/GHvErx98');
+console.log(result)
 ```
